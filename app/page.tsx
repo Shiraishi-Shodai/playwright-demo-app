@@ -23,6 +23,8 @@ export default function Home() {
   const [importFile, setImportFile] = useState<File | null>(null);
   const [importStatus, setImportStatus] = useState("");
   const [session, setSession] = useState<Session | null>(null);
+  const [editingPostId, setEditingPostId] = useState<number | null>(null);
+  const [editedContent, setEditedContent] = useState("");
 
   useEffect(() => {
     fetchSession();
@@ -137,6 +139,34 @@ export default function Home() {
     }
   };
 
+  const handleEditClick = (post: Post) => {
+    setEditingPostId(post.id);
+    setEditedContent(post.content);
+  };
+
+  const handleCancelEdit = () => {
+    setEditingPostId(null);
+    setEditedContent("");
+  };
+
+  const handleSaveEdit = async (postId: number) => {
+    if (!editedContent.trim()) return;
+
+    const res = await fetch(`/api/posts/update/${postId}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ content: editedContent }),
+    });
+
+    if (res.ok) {
+      setEditingPostId(null);
+      setEditedContent("");
+      fetchPosts();
+    } else {
+      alert("Failed to update post.");
+    }
+  };
+
   return (
     <div className={styles.page}>
       <div className={styles.container}>
@@ -203,15 +233,48 @@ export default function Home() {
               <div className={styles.postHeader}>
                 <p className={styles.postUsername}>{post.username}</p>
                 {session?.username === post.username && (
-                  <button
-                    onClick={() => handleDeletePost(post.id)}
-                    className={styles.deleteButton}
-                  >
-                    ×
-                  </button>
+                  <div className={styles.postActions}>
+                    <button
+                      onClick={() => handleEditClick(post)}
+                      className={styles.editButton}
+                    >
+                      Edit
+                    </button>
+                    <button
+                      onClick={() => handleDeletePost(post.id)}
+                      className={styles.deleteButton}
+                    >
+                      ×
+                    </button>
+                  </div>
                 )}
               </div>
-              <p className={styles.postContent} aria-label="post-content">{post.content}</p>
+              {editingPostId === post.id ? (
+                <div className={styles.editPostForm}>
+                  <textarea
+                    value={editedContent}
+                    onChange={(e) => setEditedContent(e.target.value)}
+                    className={styles.editPostTextarea}
+                    rows={3}
+                  />
+                  <div className={styles.editPostButtons}>
+                    <button
+                      onClick={() => handleSaveEdit(post.id)}
+                      className={styles.saveButton}
+                    >
+                      Save
+                    </button>
+                    <button
+                      onClick={handleCancelEdit}
+                      className={styles.cancelButton}
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <p className={styles.postContent} aria-label="post-content">{post.content}</p>
+              )}
               <p className={styles.postTimestamp}>
                 {new Date(post.created_at).toLocaleString()}
               </p>

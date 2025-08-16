@@ -216,6 +216,30 @@
   color: #ffffff; /* Pure white for username */
 }
 
+.postActions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.editButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.4rem 0.8rem;
+  border: none;
+  border-radius: 8px;
+  background-color: #7b68ee; /* MediumSlateBlue */
+  color: white;
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: 500;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.editButton:hover {
+  background-color: #6a5acd; /* Slightly darker MediumSlateBlue */
+}
+
 .deleteButton {
   background: none;
   border: none;
@@ -242,4 +266,66 @@
 .postTimestamp {
   font-size: 0.8rem;
   color: #e0e0e0; /* Lighter grey for timestamp */
+}
+
+.editPostForm {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.editPostTextarea {
+  width: 100%;
+  padding: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 8px;
+  font-size: 1rem;
+  font-family: inherit;
+  resize: vertical;
+  margin-bottom: 0.5rem;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: #ffffff;
+}
+
+.editPostTextarea:focus {
+  outline: none;
+  border-color: #7b68ee;
+  box-shadow: 0 0 0 2px rgba(123, 104, 238, 0.7);
+}
+
+.editPostButtons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+.saveButton,
+.cancelButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.saveButton {
+  background-color: #28a745; /* Green for save */
+  color: white;
+}
+
+.saveButton:hover {
+  background-color: #218838; /* Darker green */
+}
+
+.cancelButton {
+  background-color: #6c757d; /* Grey for cancel */
+  color: white;
+}
+
+.cancelButton:hover {
+  background-color: #5a6268; /* Darker grey */
 }
