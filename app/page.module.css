@@ -3,18 +3,18 @@
   justify-content: center;
   align-items: flex-start; /* Align to top */
   min-height: 100vh;
-  background-color: #f7f7f7;
   padding: 2rem;
   overflow-y: auto; /* Enable scrolling */
 }
 
 .container {
-  background: white;
+  background: rgba(0, 0, 0, 0.5); /* Slightly more opaque */
   padding: 2rem 2.5rem;
   border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5); /* Stronger shadow */
   width: 100%;
   max-width: 700px;
+  border: 1px solid rgba(255, 255, 255, 0.3); /* More prominent border */
 }
 
 .header {
@@ -22,13 +22,14 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 2rem;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.4); /* Stronger border */
   padding-bottom: 1.5rem;
 }
 
 .header h1 {
   font-size: 1.8rem;
   font-weight: 600;
+  color: #ffffff; /* Pure white for headings */
 }
 
 .headerButtons {
@@ -37,28 +38,34 @@
 }
 
 .exportButton {
-  display: inline-block;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   padding: 0.6rem 1.2rem;
   border: none;
   border-radius: 8px;
-  background-color: #28a745;
+  background-color: #7b68ee; /* MediumSlateBlue */
   color: white;
   cursor: pointer;
   font-size: 0.9rem;
   font-weight: 500;
   text-decoration: none;
+  white-space: nowrap; /* Prevent text wrapping */
   transition: background-color 0.2s ease-in-out;
 }
 
 .exportButton:hover {
-  background-color: #218838;
+  background-color: #6a5acd; /* Slightly darker MediumSlateBlue */
 }
 
 .logoutButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   padding: 0.6rem 1.2rem;
   border: none;
   border-radius: 8px;
-  background-color: #e53e3e;
+  background-color: #cc0000; /* Darker red */
   color: white;
   cursor: pointer;
   font-size: 0.9rem;
@@ -67,21 +74,25 @@
 }
 
 .logoutButton:hover {
-  background-color: #c53030;
+  background-color: #a30000; /* Even darker red */
 }
 
 .deleteAllButton {
-  background-color: #dc3545;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #cc0000; /* Darker red */
+  white-space: nowrap; /* Prevent text wrapping */
 }
 
 .deleteAllButton:hover {
-  background-color: #c82333;
+  background-color: #a30000; /* Even darker red */
 }
 
 /* Import Form */
 .importForm {
-  background-color: #f9f9f9;
-  border: 1px solid #eee;
+  background-color: rgba(0, 0, 0, 0.4); /* Slightly more opaque */
+  border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 8px;
   padding: 1.5rem;
   margin-bottom: 2rem;
@@ -90,6 +101,7 @@
 .importForm h2 {
   font-size: 1.2rem;
   margin-bottom: 1rem;
+  color: #ffffff; /* Pure white for headings */
 }
 
 .importControls {
@@ -100,13 +112,17 @@
 
 .fileInput {
   font-size: 0.9rem;
+  color: #ffffff; /* Pure white for text */
 }
 
 .importButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   padding: 0.6rem 1.2rem;
   border: none;
   border-radius: 8px;
-  background-color: #17a2b8;
+  background-color: #7b68ee; /* MediumSlateBlue */
   color: white;
   cursor: pointer;
   font-size: 0.9rem;
@@ -115,13 +131,13 @@
 }
 
 .importButton:hover {
-  background-color: #138496;
+  background-color: #6a5acd; /* Slightly darker MediumSlateBlue */
 }
 
 .importStatus {
   margin-top: 1rem;
   font-size: 0.9rem;
-  color: #555;
+  color: #e0e0e0; /* Lighter grey for status */
 }
 
 /* Post Form */
@@ -129,33 +145,38 @@
   display: flex;
   flex-direction: column;
   margin-bottom: 2rem;
-  border-top: 1px solid #eee;
+  border-top: 1px solid rgba(255, 255, 255, 0.4);
   padding-top: 2rem;
 }
 
 .textarea {
   width: 100%;
   padding: 1rem;
-  border: 1px solid #ddd;
+  border: 1px solid rgba(255, 255, 255, 0.5); /* Stronger border */
   border-radius: 8px;
   font-size: 1rem;
   font-family: inherit;
   resize: vertical;
   margin-bottom: 1rem;
+  background-color: rgba(0, 0, 0, 0.6); /* Even darker background for input */
+  color: #ffffff; /* Pure white text color */
 }
 
 .textarea:focus {
   outline: none;
-  border-color: #0070f3;
-  box-shadow: 0 0 0 2px rgba(0, 112, 243, 0.2);
+  border-color: #7b68ee; /* MediumSlateBlue focus border */
+  box-shadow: 0 0 0 2px rgba(123, 104, 238, 0.7); /* Stronger shadow */
 }
 
 .postButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   align-self: flex-end;
   padding: 0.7rem 1.5rem;
   border: none;
   border-radius: 8px;
-  background-color: #0070f3;
+  background-color: #7b68ee; /* MediumSlateBlue */
   color: white;
   cursor: pointer;
   font-size: 1rem;
@@ -164,7 +185,7 @@
 }
 
 .postButton:hover {
-  background-color: #005bb5;
+  background-color: #6a5acd; /* Slightly darker MediumSlateBlue */
 }
 
 /* Post List */
@@ -175,10 +196,10 @@
 }
 
 .post {
-  border: 1px solid #eee;
+  border: 1px solid rgba(255, 255, 255, 0.3);
   padding: 1.5rem;
   border-radius: 8px;
-  background-color: #fafafa;
+  background-color: rgba(0, 0, 0, 0.5); /* Slightly more opaque */
   text-align: left;
 }
 
@@ -192,13 +213,13 @@
 .postUsername {
   font-weight: 600;
   font-size: 1rem;
-  color: #333;
+  color: #ffffff; /* Pure white for username */
 }
 
 .deleteButton {
   background: none;
   border: none;
-  color: #888;
+  color: #e0e0e0; /* Lighter grey for delete button */
   cursor: pointer;
   font-size: 1.5rem;
   font-weight: bold;
@@ -207,7 +228,7 @@
 }
 
 .deleteButton:hover {
-  color: #e53e3e;
+  color: #cc0000; /* Darker red */
 }
 
 .postContent {
@@ -215,11 +236,10 @@
   line-height: 1.6;
   margin-bottom: 1rem;
   white-space: pre-wrap; /* Preserve whitespace and newlines */
-  color: #333;
+  color: #ffffff; /* Pure white for content */
 }
 
 .postTimestamp {
   font-size: 0.8rem;
-  color: #888;
-  text-align: right;
+  color: #e0e0e0; /* Lighter grey for timestamp */
 }
