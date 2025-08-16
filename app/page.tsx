@@ -41,6 +41,10 @@ export default function Home() {
     const res = await fetch("/api/posts");
     if (res.ok) {
       const data = await res.json();
+      // 降順にソート
+      // (a, b) => a - b → 小さい値が前 → 昇順(正の時aを後ろにする)
+      // (a, b) => b - a → 大きい値が前 → 降順(正の時bを後ろにする)
+      data.sort((a: Post, b: Post) => b.id - a.id);
       setPosts(data);
     }
   };
@@ -195,7 +199,7 @@ export default function Home() {
 
         <div className={styles.postList}>
           {posts.map((post) => (
-            <div key={post.id} className={styles.post}>
+            <div key={post.id} className={styles.post} aria-label={`post-id-${post.id}`}>
               <div className={styles.postHeader}>
                 <p className={styles.postUsername}>{post.username}</p>
                 {session?.username === post.username && (
@@ -207,7 +211,7 @@ export default function Home() {
                   </button>
                 )}
               </div>
-              <p className={styles.postContent}>{post.content}</p>
+              <p className={styles.postContent} aria-label="post-content">{post.content}</p>
               <p className={styles.postTimestamp}>
                 {new Date(post.created_at).toLocaleString()}
               </p>
