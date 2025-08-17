@@ -41,14 +41,14 @@ export async function POST(request: Request) {
     const token = await new SignJWT({ userId: user.id, username: user.username })
       .setProtectedHeader({ alg: 'HS256' })
       .setIssuedAt()
-      .setExpirationTime('1h')
+      .setExpirationTime('10h')
       .sign(secret);
 
     const response = NextResponse.json({ success: true });
     response.cookies.set('session', token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
-      maxAge: 60 * 60, // 1 hour
+      maxAge: 10 * 60 * 60, // 10 hour
       path: '/',
     });
 
