@@ -177,6 +177,7 @@ export default function Home() {
               href="/api/posts/export"
               className={styles.exportButton}
               download
+              aria-label="export-excel"
             >
               Export to Excel
             </a>
@@ -204,6 +205,7 @@ export default function Home() {
               }}
               accept=".xlsx"
               className={styles.fileInput}
+              aria-label="select-excel-file"
             />
             <button type="submit" className={styles.importButton}>
               Import
