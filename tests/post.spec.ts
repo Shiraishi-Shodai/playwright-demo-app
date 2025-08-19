@@ -4,8 +4,8 @@ import path from "path";
 import ExcelJS from "exceljs";
 import { after } from "next/server";
 
-// 投稿できることをチェック
-test("test", async ({ page }) => {
+// 投稿できることをチェック(ログイン済みでないと不可能)
+test("excutePostText", async ({ page }) => {
   const db = new Database("db/database.db");
   const stmt = db.prepare("SELECT MAX(id) as max_id FROM posts");
   const beforeNewestPostId = stmt.get() as { max_id: number } | undefined;
@@ -84,26 +84,28 @@ const getTargetValue = (worksheet: any) => {
   return beforeEditValue;
 };
 
-const editExcelFile = async(beforeWorkbook: any,beforeWorksheet:any, edittExcelFileName:string, editValue: string) => {
+const editExcelFile = async(beforeWorkbook: any,beforeWorksheet:any, edittExcelFileName:string, editValue: string, saveFileName:string) => {
   // あくまでworkbookインスタンスがメモリ上で更新されただけ
   beforeWorksheet.getCell("C2").value = editValue;
   // 上書き保存
-  await beforeWorkbook.xlsx.writeFile(edittExcelFileName);
+  await beforeWorkbook.xlsx.writeFile(saveFileName);
 };
 
 
 // 正しくデータを編集し、システムに反映できることを確認
-test("excuteEditExcelFile", async ({ page }) => {
+test("excuteEditExcelFileText", async ({ page }) => {
   await page.goto("http://localhost:3000/");
 
-  const edittExcelFileName = path.join(__dirname, "../public/edit.xlsx");
+  const beforeEdittExcelFileName = path.join(__dirname, "../public/beforeEdit.xlsx");
+  const edittExcelFileName = path.join(__dirname, "../public/editNow.xlsx");
+  const afterEdittExcelFileName = path.join(__dirname, "../public/afterEdit.xlsx");
 
   // エクスポート
-  await exportExcelFile(page, edittExcelFileName);
+  await exportExcelFile(page, beforeEdittExcelFileName);
 
   // エクセルにアクセスする。
   const beforeWorkbook = new ExcelJS.Workbook();
-  await beforeWorkbook.xlsx.readFile(edittExcelFileName);
+  await beforeWorkbook.xlsx.readFile(beforeEdittExcelFileName);
   const beforeWorksheet = beforeWorkbook.getWorksheet("Posts");
 
   // 現在の値を取得
@@ -112,20 +114,25 @@ test("excuteEditExcelFile", async ({ page }) => {
 
   // 値を編集
   const editValue = "Edit Text!!!";
-  await editExcelFile(beforeWorkbook, beforeWorksheet, edittExcelFileName, editValue);
+  await editExcelFile(beforeWorkbook, beforeWorksheet, edittExcelFileName, editValue, edittExcelFileName);
 
   // インポート
   await importExcelFile(page, edittExcelFileName);
 
+  setTimeout(()=> {
+    console.log("インポートが反映されるのを待つ")
+  }, 3000);
+
   // 再エクスポート
-  await exportExcelFile(page, edittExcelFileName);
+  await exportExcelFile(page, afterEdittExcelFileName);
 
   // 再エクスポートした後の値を取得
   const afterWorkbook = new ExcelJS.Workbook();
-  await afterWorkbook.xlsx.readFile(edittExcelFileName);
+  await afterWorkbook.xlsx.readFile(afterEdittExcelFileName);
   const afterWorksheet = afterWorkbook.getWorksheet("Posts");
   const afterEditValue = getTargetValue(afterWorksheet);
-  console.log(afterEditValue);
+  console.log(afterEditValue, editValue);
 
+  // 正しく値が編集されているかを判定
   expect(afterEditValue).toEqual(editValue);
 });

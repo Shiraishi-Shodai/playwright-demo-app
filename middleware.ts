@@ -11,7 +11,6 @@ const secret = new TextEncoder().encode(
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  // Allow login and session API routes to be accessed without a session
   if (
     pathname.startsWith("/api/login") ||
     pathname.startsWith("/api/session")
@@ -21,6 +20,7 @@ export async function middleware(request: NextRequest) {
 
   const session = request.cookies.get("session")?.value;
 
+  // セッションが保持されていない場合、ログイン画面へリダイレクト
   if (!session) {
     if (request.nextUrl.pathname === "/login") {
       return NextResponse.next();

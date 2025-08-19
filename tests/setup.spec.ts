@@ -12,5 +12,6 @@ test("test", async ({ page }) => {
   await page.getByRole("button", { name: "Login" }).click();
   await expect(page.locator("h1")).toContainText("Welcome, admin!");
 
+  // cockei情報をauthFileにjsonで保存
   await page.context().storageState({ path: authFile });
 });
